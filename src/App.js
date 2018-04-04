@@ -44,7 +44,7 @@ class App extends Component {
           <Content style={{ padding: '50px 50px' }}>
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/classes" component={GroupIndex} />
-            <Route exact path="/classes/1" component={GroupOverview} />
+            <Route exact path="/classes/:id" component={GroupOverview} />
           </Content>
           <Footer style={{ textAlign: 'center' }}>
             Student Evaluation tool for Codaisseur
