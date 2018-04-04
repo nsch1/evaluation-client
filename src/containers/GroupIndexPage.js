@@ -1,15 +1,15 @@
 import React, {PureComponent} from 'react'
-import LoginForm from "../components/LoginForm"
 import Row from "antd/es/grid/row"
 import Card from "antd/es/card/index"
+import GroupList from "../components/GroupList"
 
-export default class LoginPage extends PureComponent {
+export default class GroupIndex extends PureComponent {
 
   render() {
     return (
       <Row type="flex" justify="space-around" align="middle">
-        <Card title="Teacher Login" bordered={false}>
-          <LoginForm/>
+        <Card title="Classes" bordered={false} style={{maxWidth: '700px', width: '70vw'}}>
+          <GroupList/>
         </Card>
       </Row>
     )
