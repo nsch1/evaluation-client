@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import LoginPage from "./containers/LoginPage"
+import GroupIndex from "./containers/GroupIndexPage"
 const { Header, Content, Footer } = Layout
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
           </Header>
           <Content style={{ padding: '50px 50px' }}>
             <Route exact path="/" component={LoginPage} />
+            <Route exact path="/classes" component={GroupIndex} />
           </Content>
           <Footer style={{ textAlign: 'center' }}>
             Student Evaluation tool for Codaisseur

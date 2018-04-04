@@ -11,7 +11,7 @@ export default class LoginForm extends PureComponent {
     return (
       <Form layout="inline">
         <Item>
-          <Input placeholder="Email" />
+          <Input type="email" placeholder="Email" />
         </Item>
         <Item>
           <Input type="password" placeholder="Password" />
