@@ -11,12 +11,12 @@ export default class GroupIndex extends PureComponent {
     return (
       <Row type="flex" justify="space-around" align="middle">
         <Card title="Classes" bordered={false} style={{maxWidth: '700px', width: '70vw'}}>
-          <GroupList/>
-          <Button
-            type="primary"
-          >
-            Add Class
-          </Button>
+            <GroupList/>
+          <Row type="flex" justify="end">
+            <Button type="primary">
+              Add Class
+            </Button>
+          </Row>
         </Card>
       </Row>
     )
