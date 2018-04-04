@@ -42,7 +42,7 @@ class App extends Component {
             </Menu>
           </Header>
           <Content style={{ padding: '50px 50px' }}>
-            <Route exact path="/" component={LoginPage} />
+            <Route exact path="/login" component={LoginPage} />
             <Route exact path="/classes" component={GroupIndex} />
             <Route exact path="/classes/1" component={GroupOverview} />
           </Content>

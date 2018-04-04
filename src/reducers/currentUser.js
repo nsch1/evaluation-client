@@ -12,7 +12,7 @@ catch (e) {
   console.log(`Error retrieving data from local storage`, e)
 }
 
-export default function (state = initialState, {type, payload}) {
+export default (state = initialState, {type, payload}) => {
   switch (type) {
     case USER_LOGIN_SUCCESS:
       return payload
