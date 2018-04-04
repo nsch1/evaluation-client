@@ -6,6 +6,8 @@ import LoginPage from "./containers/LoginPage"
 import GroupIndex from "./containers/GroupIndexPage"
 import StudentCard from "./components/StudentCard"
 import GroupOverview from "./containers/GroupOverview"
+import {logout} from "./actions/users"
+import {connect} from "react-redux"
 const { Header, Content, Footer } = Layout
 
 class App extends Component {
@@ -17,7 +19,19 @@ class App extends Component {
           style={{minHeight:'100vh'}}
         >
           <Header>
-            <div/>
+            <div
+              className="logout"
+              style={{
+                height: '63px',
+                width: '80px',
+                float: 'right',
+                color: 'white',
+                textAlign: 'center'
+              }}
+              onClick={this.props.logout}
+            >
+              Log out
+            </div>
             <Menu
               theme="dark"
               mode="horizontal"
@@ -41,4 +55,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, {logout})(App);

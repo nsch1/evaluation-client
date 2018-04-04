@@ -9,7 +9,7 @@ export default class LoginForm extends PureComponent {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state)
+    this.props.onSubmit(this.state)
   }
 
   handleChange = (e) => {
