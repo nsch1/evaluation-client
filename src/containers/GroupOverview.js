@@ -14,7 +14,7 @@ import Icon from "antd/es/icon/index"
 import Button from "antd/es/button/button"
 import Divider from "antd/es/divider/index"
 import StudentForm from "../components/StudentForm"
-import {postStudent} from "../actions/students"
+import {deleteStudent, postStudent} from "../actions/students"
 
 class GroupOverview extends PureComponent {
 
@@ -33,7 +33,7 @@ class GroupOverview extends PureComponent {
 
     return students.map(s => (
       <Col style={{margin: 15}}>
-        <StudentCard student={s} hoverable={false} actions={[<Icon type="edit" />, <Icon type="delete" />]} />
+        <StudentCard student={s} hoverable={false} actions={[<Icon type="edit" />, <Icon type="delete" onClick={_ => this.handleDeleteClick(s.id)} />]} />
       </Col>
     ))
   }
@@ -58,6 +58,10 @@ class GroupOverview extends PureComponent {
     this.setState({
       addStudent: !this.state.addStudent
     })
+  }
+
+  handleDeleteClick = (id) => {
+    this.props.deleteStudent(id)
   }
 
   handleSubmit = (data) => {
@@ -161,4 +165,4 @@ const mapStateToProps = ({group, currentUser}) => {
   }
 }
 
-export default connect(mapStateToProps, {getGroup, postStudent})(GroupOverview)
+export default connect(mapStateToProps, {getGroup, postStudent, deleteStudent})(GroupOverview)

@@ -53,7 +53,7 @@ class StudentPage extends PureComponent {
 
 const mapStateToProps = ({student, currentUser}) => {
   const {evaluations} = student
-  const color = evaluations ? evaluations[0] ? evaluations[0].color.toUpperCase() : null : null
+  const color = evaluations ? evaluations[0] ? evaluations[0].color.toUpperCase() : 'GREY' : null
 
   return {
     student: {
