@@ -6,12 +6,12 @@ const {Item} = Form
 export default class StudentCard extends PureComponent {
 
   render() {
-    const {student, pad} = this.props
+    const {student} = this.props
 
     return (
       <Card
-        hoverable={this.props.hoverable}
-        style={{width: 230, background: student.colorCode, marginLeft: pad || 0, marginRight: pad || 0}}
+        hoverable
+        style={{width: 230, background: student.colorCode}}
         cover={<img alt="student" src={student.picture} />}
       >
         <Card.Meta

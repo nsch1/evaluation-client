@@ -9,6 +9,7 @@ import {Redirect} from "react-router-dom"
 import BackTop from "antd/es/back-top/index"
 import GroupForm from "../components/GroupForm"
 import Divider from "antd/es/divider/index"
+import Breadcrumb from "antd/es/breadcrumb/Breadcrumb"
 
 class GroupIndex extends PureComponent {
 
@@ -43,25 +44,34 @@ class GroupIndex extends PureComponent {
     )
 
     return (
-      <Row type="flex" justify="space-around" align="middle">
-        <BackTop />
-        <Card title="Classes" bordered={false} style={{maxWidth: '700px', width: '70vw'}}>
-          <GroupList data={groups} />
-          {
-            this.state.addGroup &&
-            <Row type="flex" justify="center">
-              <Divider>Add Class</Divider>
-              <GroupForm onSubmit={this.handleSubmit} />
-              <Divider/>
+      <div>
+        <Row type="flex" justify="center" >
+          <div style={{maxWidth: '700px', width: '70vw', marginBottom: 10}}>
+            <Breadcrumb>
+              <Breadcrumb.Item>Classes</Breadcrumb.Item>
+            </Breadcrumb>
+          </div>
+        </Row>
+        <Row type="flex" justify="space-around" align="middle">
+          <BackTop />
+          <Card title="Classes" bordered={false} style={{maxWidth: '700px', width: '70vw'}}>
+            <GroupList data={groups} />
+            {
+              this.state.addGroup &&
+              <Row type="flex" justify="center">
+                <Divider>Add Class</Divider>
+                <GroupForm onSubmit={this.handleSubmit} />
+                <Divider/>
+              </Row>
+            }
+            <Row type="flex" justify="end">
+              <Button onClick={this.handleClick} >
+                Add Class
+              </Button>
             </Row>
-          }
-          <Row type="flex" justify="end">
-            <Button onClick={this.handleClick} >
-              Add Class
-            </Button>
-          </Row>
-        </Card>
-      </Row>
+          </Card>
+        </Row>
+      </div>
     )
   }
 }
