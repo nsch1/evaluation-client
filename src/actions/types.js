@@ -5,3 +5,4 @@ export const USER_LOGOUT = 'USER_LOGOUT'
 
 export const GET_CLASSES = 'GET_CLASSES'
 export const GET_CLASS = 'GET_CLASS'
+export const POST_CLASS = 'POST_CLASS'
