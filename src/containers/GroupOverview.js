@@ -15,6 +15,7 @@ import Button from "antd/es/button/button"
 import Divider from "antd/es/divider/index"
 import StudentForm from "../components/StudentForm"
 import {deleteStudent, editStudent, postStudent} from "../actions/students"
+import {getRandomStudentId} from "../randomStudent"
 
 class GroupOverview extends PureComponent {
 
@@ -92,7 +93,14 @@ class GroupOverview extends PureComponent {
       editStudent: false,
       targetStudent: {}
     })
-}
+  }
+
+  handleQuestionClick = (students) => {
+    this.setState({
+      studentId: getRandomStudentId(students),
+      redirect: true
+    })
+  }
 
   render() {
     const {group, authenticated, students} = this.props
@@ -100,6 +108,10 @@ class GroupOverview extends PureComponent {
     if(!authenticated) return (
       <Redirect to="/login" />
     )
+
+    if (this.state.redirect) {
+      return <Redirect push to={`/students/${this.state.studentId}`} />
+    }
 
     const redPercent = this.calcColorPercentage(students, 'RED')
     const yellowPercent = this.calcColorPercentage(students, 'YELLOW')
@@ -149,7 +161,20 @@ class GroupOverview extends PureComponent {
                   <Divider>{this.state.addStudent && 'Add Student'}{this.state.editStudent && 'Edit Student'}</Divider>
                   {
                     !this.state.addStudent && !this.state.editStudent &&
-                    <Button onClick={this.toggleAddStudent} >Add Student</Button>
+                    <div>
+                      <Button
+                        style={{marginRight: 10}}
+                        onClick={this.toggleAddStudent}
+                      >
+                        Add Student
+                      </Button>
+                      <Button
+                        style={{marginLeft: 10}}
+                        onClick={_ => this.handleQuestionClick(students)}
+                      >
+                        Question Student
+                      </Button>
+                    </div>
                   }
                   {
                     this.state.addStudent &&
