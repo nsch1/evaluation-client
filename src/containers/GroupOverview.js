@@ -10,6 +10,7 @@ import BackTop from "antd/es/back-top/index"
 import Spin from "antd/es/spin/index"
 import {colors} from "../constants"
 import Breadcrumb from "antd/es/breadcrumb/Breadcrumb"
+import Icon from "antd/es/icon/index"
 
 class GroupOverview extends PureComponent {
 
@@ -23,7 +24,9 @@ class GroupOverview extends PureComponent {
     const {students} = this.props
 
     return students.map(s => (
-      <Col style={{margin: 15}}><Link to={`/students/${s.id}`}><StudentCard student={s} hoverable={true} /></Link></Col>
+      <Col style={{margin: 15}}>
+        <StudentCard student={s} hoverable={false} actions={[<Icon type="edit" />, <Icon type="delete" />]} />
+      </Col>
     ))
   }
 
