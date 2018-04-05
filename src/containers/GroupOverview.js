@@ -11,8 +11,16 @@ import Spin from "antd/es/spin/index"
 import {colors} from "../constants"
 import Breadcrumb from "antd/es/breadcrumb/Breadcrumb"
 import Icon from "antd/es/icon/index"
+import Button from "antd/es/button/button"
+import Divider from "antd/es/divider/index"
+import StudentForm from "../components/StudentForm"
+import {postStudent} from "../actions/students"
 
 class GroupOverview extends PureComponent {
+
+  state = {
+    addStudent: false
+  }
 
   componentWillMount() {
     if(this.props.authenticated) {
@@ -46,6 +54,17 @@ class GroupOverview extends PureComponent {
     return Math.round(100 / students.length * colorAmount)
   }
 
+  handleClick = () => {
+    this.setState({
+      addStudent: !this.state.addStudent
+    })
+  }
+
+  handleSubmit = (data) => {
+    this.props.postStudent(data, this.props.group.id)
+    this.handleClick()
+  }
+
   render() {
     const {group, authenticated, students} = this.props
 
@@ -71,9 +90,11 @@ class GroupOverview extends PureComponent {
           <BackTop />
           {
             !group.id ?
+
               <Card title={`Loading..`} bordered={false} style={{maxWidth: '75vw'}}>
                 <Spin />
               </Card> :
+
               <Card title={`Class #${group.id}`} bordered={false} style={{maxWidth: '75vw'}}>
                 <Row type="flex" justify="center" >
                   <Col
@@ -96,13 +117,25 @@ class GroupOverview extends PureComponent {
                   </Col>
                 </Row>
                 <Row type="flex" justify="center">
+                  <Divider>{this.state.addStudent && 'Add Student'}</Divider>
+                  {
+                    !this.state.addStudent &&
+                    <Button onClick={this.handleClick} >Add Student</Button>
+                  }
+                  {
+                    this.state.addStudent &&
+                    <StudentForm onSubmit={this.handleSubmit} />
+                  }
+                  <Divider/>
+                </Row>
+                <Row type="flex" justify="center">
                   {
                     group.students &&
                     this.renderStudents()
                   }
                   {
                     !group.students[0] &&
-                      <p>No students found.</p>
+                    <p>No students found.</p>
                   }
                 </Row>
               </Card>
@@ -128,4 +161,4 @@ const mapStateToProps = ({group, currentUser}) => {
   }
 }
 
-export default connect(mapStateToProps, {getGroup})(GroupOverview)
+export default connect(mapStateToProps, {getGroup, postStudent})(GroupOverview)
