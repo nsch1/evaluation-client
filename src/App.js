@@ -8,6 +8,7 @@ import StudentCard from "./components/StudentCard"
 import GroupOverview from "./containers/GroupOverview"
 import {logout} from "./actions/users"
 import {connect} from "react-redux"
+import StudentPage from "./containers/StudentPage"
 const { Header, Content, Footer } = Layout
 
 class App extends Component {
@@ -45,6 +46,7 @@ class App extends Component {
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/classes" component={GroupIndex} />
             <Route exact path="/classes/:id" component={GroupOverview} />
+            <Route exact path="/students/:id" component={StudentPage} />
           </Content>
           <Footer style={{ textAlign: 'center' }}>
             Student Evaluation tool for Codaisseur
