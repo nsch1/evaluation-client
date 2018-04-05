@@ -1,6 +1,6 @@
 import {baseUrl} from "../constants"
 import * as request from "superagent"
-import {GET_STUDENT, POST_STUDENT} from "./types"
+import {DELETE_STUDENT, GET_STUDENT, POST_STUDENT} from "./types"
 
 
 export const getStudent = (id) => (dispatch, getState) => {
@@ -30,6 +30,22 @@ export const postStudent = (data, groupId) => (dispatch, getState) => {
     .then(res => {
       dispatch({
         type: POST_STUDENT,
+        payload: res.body
+      })
+    })
+    .catch(err => console.log(err))
+}
+
+export const deleteStudent = (id) => (dispatch, getState) => {
+  const state = getState()
+  const jwt = state.currentUser.jwt
+
+  request
+    .delete(`${baseUrl}/students/${id}`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_STUDENT,
         payload: res.body
       })
     })

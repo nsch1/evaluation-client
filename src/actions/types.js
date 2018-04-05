@@ -9,5 +9,6 @@ export const POST_CLASS = 'POST_CLASS'
 
 export const GET_STUDENT = 'GET_STUDENT'
 export const POST_STUDENT = 'POST_STUDENT'
+export const DELETE_STUDENT = 'DELETE_STUDENT'
 
 export const POST_EVALUATION = 'POST_EVALUATION'
