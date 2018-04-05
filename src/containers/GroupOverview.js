@@ -14,12 +14,13 @@ import Icon from "antd/es/icon/index"
 import Button from "antd/es/button/button"
 import Divider from "antd/es/divider/index"
 import StudentForm from "../components/StudentForm"
-import {deleteStudent, postStudent} from "../actions/students"
+import {deleteStudent, editStudent, postStudent} from "../actions/students"
 
 class GroupOverview extends PureComponent {
 
   state = {
-    addStudent: false
+    addStudent: false,
+    editStudent: false
   }
 
   componentWillMount() {
@@ -33,7 +34,14 @@ class GroupOverview extends PureComponent {
 
     return students.map(s => (
       <Col style={{margin: 15}}>
-        <StudentCard student={s} hoverable={false} actions={[<Icon type="edit" />, <Icon type="delete" onClick={_ => this.handleDeleteClick(s.id)} />]} />
+        <StudentCard
+          student={s}
+          hoverable={false}
+          actions={[
+            <Icon type="edit" onClick={_ => this.toggleEditStudent(s.id)}/>,
+            <Icon type="delete" onClick={_ => this.handleDeleteClick(s.id)} />
+          ]}
+        />
       </Col>
     ))
   }
@@ -54,9 +62,18 @@ class GroupOverview extends PureComponent {
     return Math.round(100 / students.length * colorAmount)
   }
 
-  handleClick = () => {
+  toggleAddStudent = () => {
     this.setState({
       addStudent: !this.state.addStudent
+    })
+  }
+
+  toggleEditStudent = (id) => {
+    const {students} = this.props
+
+    this.setState({
+      editStudent: true,
+      targetStudent: students.filter(s => s.id === id)[0]
     })
   }
 
@@ -66,8 +83,16 @@ class GroupOverview extends PureComponent {
 
   handleSubmit = (data) => {
     this.props.postStudent(data, this.props.group.id)
-    this.handleClick()
+    this.toggleAddStudent()
   }
+
+  handleEditSubmit = (data) => {
+    this.props.editStudent(data, this.state.targetStudent.id)
+    this.setState({
+      editStudent: false,
+      targetStudent: {}
+    })
+}
 
   render() {
     const {group, authenticated, students} = this.props
@@ -121,14 +146,18 @@ class GroupOverview extends PureComponent {
                   </Col>
                 </Row>
                 <Row type="flex" justify="center">
-                  <Divider>{this.state.addStudent && 'Add Student'}</Divider>
+                  <Divider>{this.state.addStudent && 'Add Student'}{this.state.editStudent && 'Edit Student'}</Divider>
                   {
-                    !this.state.addStudent &&
-                    <Button onClick={this.handleClick} >Add Student</Button>
+                    !this.state.addStudent && !this.state.editStudent &&
+                    <Button onClick={this.toggleAddStudent} >Add Student</Button>
                   }
                   {
                     this.state.addStudent &&
                     <StudentForm onSubmit={this.handleSubmit} />
+                  }
+                  {
+                    this.state.editStudent &&
+                    <StudentForm initialValues={this.state.targetStudent} onSubmit={this.handleEditSubmit}/>
                   }
                   <Divider/>
                 </Row>
@@ -165,4 +194,4 @@ const mapStateToProps = ({group, currentUser}) => {
   }
 }
 
-export default connect(mapStateToProps, {getGroup, postStudent, deleteStudent})(GroupOverview)
+export default connect(mapStateToProps, {getGroup, postStudent, deleteStudent, editStudent})(GroupOverview)

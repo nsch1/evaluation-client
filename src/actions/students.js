@@ -1,6 +1,6 @@
 import {baseUrl} from "../constants"
 import * as request from "superagent"
-import {DELETE_STUDENT, GET_STUDENT, POST_STUDENT} from "./types"
+import {DELETE_STUDENT, EDIT_STUDENT, GET_STUDENT, POST_STUDENT} from "./types"
 
 
 export const getStudent = (id) => (dispatch, getState) => {
@@ -30,6 +30,23 @@ export const postStudent = (data, groupId) => (dispatch, getState) => {
     .then(res => {
       dispatch({
         type: POST_STUDENT,
+        payload: res.body
+      })
+    })
+    .catch(err => console.log(err))
+}
+
+export const editStudent = (data, studentId) => (dispatch, getState) => {
+  const state = getState()
+  const jwt = state.currentUser.jwt
+
+  request
+    .patch(`${baseUrl}/students/${studentId}`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .send(data)
+    .then(res => {
+      dispatch({
+        type: EDIT_STUDENT,
         payload: res.body
       })
     })

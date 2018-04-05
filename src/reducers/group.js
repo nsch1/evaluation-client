@@ -1,4 +1,4 @@
-import {DELETE_STUDENT, GET_CLASS, POST_STUDENT} from "../actions/types"
+import {DELETE_STUDENT, EDIT_STUDENT, GET_CLASS, POST_STUDENT} from "../actions/types"
 
 export default (state = {}, {type, payload}) => {
   switch(type) {
@@ -15,6 +15,15 @@ export default (state = {}, {type, payload}) => {
         students: state.students.filter(s => {
           return s.name !== payload.name
         })
+      }
+    case EDIT_STUDENT:
+      const index = state.students.findIndex(s => s.id === payload.id)
+      const newStudents = state.students.concat()
+      newStudents[index] = payload
+
+      return {
+        ...state,
+        students: newStudents
       }
     default:
       return state
