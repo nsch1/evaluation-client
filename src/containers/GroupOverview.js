@@ -96,13 +96,9 @@ class GroupOverview extends PureComponent {
 }
 
 const mapStateToProps = ({group, currentUser}) => {
-  if(!group.students) return {
-    group,
-    authenticated: currentUser
-  }
   return {
     group,
-    students: group.students.map(s => {
+    students: !group.students ? null : group.students.map(s => {
       const color = s.evaluations[0].color.toUpperCase() || 'GREY'
       return {
         ...s,
