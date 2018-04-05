@@ -21,15 +21,26 @@ export default class StudentForm extends PureComponent {
   }
 
   render() {
-    const {initialValues} = this.props
+    const initialValues = this.props.initialValues || {}
 
     return (
       <Form onSubmit={this.handleSubmit}>
         <Item>
-          <Input name="name" placeholder="Name" value={this.state.name || initialValues.name || ''} onChange={this.handleChange} />
+          <Input
+            name="name"
+            placeholder="Name"
+            value={this.state.name || initialValues.name || ''}
+            onChange={this.handleChange}
+          />
         </Item>
         <Item>
-          <Input name="picture" type="url" placeholder="Picture url" value={initialValues.picture || this.state.picture || ''} onChange={this.handleChange} />
+          <Input
+            name="picture"
+            type="url"
+            placeholder="Picture url"
+            value={this.state.picture || initialValues.picture || ''}
+            onChange={this.handleChange}
+          />
         </Item>
         <Item>
           <Button

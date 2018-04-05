@@ -17,6 +17,11 @@ export default class EvaluationForm extends PureComponent {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.onSubmit(this.state)
+    this.setState({
+      color: '',
+      remark: '',
+      date: new Date().toISOString()
+    })
   }
 
   handleChange = (e) => {
@@ -46,10 +51,10 @@ export default class EvaluationForm extends PureComponent {
           </RadioGroup>
         </Item>
         <Item>
-          <DatePicker defaultValue={moment(new Date())} onChange={(_, date) => this.dateChange(date, 'date')} />
+          <DatePicker value={moment(new Date(this.state.date)) || moment(new Date())} onChange={(_, date) => this.dateChange(date, 'date')} />
         </Item>
         <Item>
-          <TextArea name="remark" rows={4} onChange={this.handleChange} />
+          <TextArea name="remark" rows={4} value={this.state.remark || ''} onChange={this.handleChange} />
         </Item>
         <Item>
           <Button

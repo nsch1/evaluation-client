@@ -9,6 +9,8 @@ import {getStudent} from "../actions/students"
 import {colors} from "../constants"
 import {postEvaluation} from "../actions/evaluations"
 import Breadcrumb from "antd/es/breadcrumb/Breadcrumb"
+import EvaluationList from "../components/EvaluationList"
+import Divider from "antd/es/divider/index"
 
 class StudentPage extends PureComponent {
 
@@ -43,6 +45,10 @@ class StudentPage extends PureComponent {
             <Row type="flex" justify="center">
             <StudentCard student={student} hoverable={false} pad={35} />
             <EvaluationForm onSubmit={this.handleSubmit} pad={35} />
+            </Row>
+            <Row type="flex" justify="center">
+              <Divider>Previous Evaluations</Divider>
+              <EvaluationList data={student.evaluations} />
             </Row>
           </Card>
         </Row>
