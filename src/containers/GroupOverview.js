@@ -67,25 +67,29 @@ class GroupOverview extends PureComponent {
                   span={this.calcColSpan(redPercent)}
                   style={{height: 20, background: '#ef9a9a', textAlign: 'center'}}
                 >
-                  {`${redPercent}%`}
+                  {redPercent ? `${redPercent}%` : null}
                 </Col>
                 <Col
                   span={this.calcColSpan(yellowPercent)}
                   style={{height: 20, background: '#FFE082', textAlign: 'center'}}
                 >
-                  {`${yellowPercent}%`}
+                  {yellowPercent ? `${yellowPercent}%` : null}
                 </Col>
                 <Col
                   span={this.calcColSpan(greenPercent)}
                   style={{height: 20, background: '#A5D6A7', textAlign: 'center'}}
                 >
-                  {`${greenPercent}%`}
+                  {greenPercent ? `${greenPercent}%` : null}
                 </Col>
               </Row>
               <Row type="flex" justify="center">
                 {
                   group.students &&
                   this.renderStudents()
+                }
+                {
+                  !group.students[0] &&
+                    <p>No students found.</p>
                 }
               </Row>
             </Card>
