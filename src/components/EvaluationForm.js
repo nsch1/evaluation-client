@@ -23,6 +23,15 @@ export default class EvaluationForm extends PureComponent {
     })
   }
 
+  handleSubmitNext = () => {
+    this.props.onSubmitNext(this.state)
+    this.setState({
+      color: '',
+      remark: '',
+      date: new Date().toISOString()
+    })
+  }
+
   handleChange = (e) => {
     const {name, value} = e.target
 
@@ -68,6 +77,13 @@ export default class EvaluationForm extends PureComponent {
             htmlType="submit"
           >
             Submit
+          </Button>
+          <Button
+            type="primary"
+            style={{marginLeft: 20}}
+            onClick={this.handleSubmitNext}
+          >
+            Submit & Next
           </Button>
         </Item>
       </Form>

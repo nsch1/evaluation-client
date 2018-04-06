@@ -11,6 +11,7 @@ import {postEvaluation} from "../actions/evaluations"
 import Breadcrumb from "antd/es/breadcrumb/Breadcrumb"
 import EvaluationList from "../components/EvaluationList"
 import Divider from "antd/es/divider/index"
+import {getGroup} from "../actions/groups"
 
 class StudentPage extends PureComponent {
 
@@ -18,16 +19,36 @@ class StudentPage extends PureComponent {
     this.props.getStudent(this.props.match.params.id)
   }
 
+  componentWillReceiveProps(newProps) {
+    if(newProps.match.params.id !== this.props.match.params.id) {
+      this.props.getStudent(newProps.match.params.id)
+    }
+  }
+
   handleSubmit = (data) => {
     this.props.postEvaluation(data, this.props.student.id)
   }
 
+  handleSubmitNext = (data) => {
+    this.props.postEvaluation(data, this.props.student.id)
+    this.props.history.push(`/students/${this.getNextStudentId()}`)
+  }
+
+  getNextStudentId = () => {
+    const {student, group} = this.props
+
+    const index = group.students.findIndex(s => s.id === student.id) + 1
+    return group.students[index].id
+  }
+
   render() {
-    const {student, authenticated} = this.props
+    const {student, group, getGroup, authenticated} = this.props
 
     if(!authenticated) return (
       <Redirect to="/classes" />
     )
+
+    if(student.groupId && !group.id) getGroup(student.groupId)
 
     return (
       <div>
@@ -43,8 +64,8 @@ class StudentPage extends PureComponent {
         <Row type="flex" justify="space-around" align="middle" >
           <Card title={student.name} bordered={false} style={{width: '70vw'}} >
             <Row type="flex" justify="center">
-            <StudentCard student={student} hoverable={false} pad={35} />
-            <EvaluationForm onSubmit={this.handleSubmit} pad={35} />
+            <StudentCard key={student.id} student={student} hoverable={false} pad={35} />
+            <EvaluationForm onSubmit={this.handleSubmit} onSubmitNext={this.handleSubmitNext} pad={35} />
             </Row>
             <Row type="flex" justify="center">
               <Divider>Previous Evaluations</Divider>
@@ -57,18 +78,20 @@ class StudentPage extends PureComponent {
   }
 }
 
-const mapStateToProps = ({student, currentUser}) => {
+const mapStateToProps = ({student, group, currentUser}) => {
   const {evaluations} = student
   const color = evaluations ? evaluations[0] ? evaluations[0].color.toUpperCase() : 'GREY' : null
 
   return {
+    rawStudent: student,
     student: {
       ...student,
       color,
       colorCode: colors[color]
     },
-    authenticated: currentUser
+    authenticated: currentUser,
+    group
   }
 }
 
-export default connect(mapStateToProps, {getStudent, postEvaluation})(StudentPage)
+export default connect(mapStateToProps, {getStudent, postEvaluation, getGroup})(StudentPage)
