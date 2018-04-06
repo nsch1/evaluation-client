@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react'
 import Form from "antd/es/form/Form"
-import Input from "antd/es/input/Input"
 import Button from "antd/es/button/button"
 import RadioGroup from "antd/es/radio/group"
 import Radio from "antd/es/radio/radio"
@@ -38,6 +37,10 @@ export default class EvaluationForm extends PureComponent {
     })
   }
 
+  disabledDates = (dateValue) => {
+    return dateValue > moment(new Date())
+  }
+
   render() {
     const {pad} = this.props
 
@@ -51,7 +54,10 @@ export default class EvaluationForm extends PureComponent {
           </RadioGroup>
         </Item>
         <Item>
-          <DatePicker value={moment(new Date(this.state.date)) || moment(new Date())} onChange={(_, date) => this.dateChange(date, 'date')} />
+          <DatePicker
+            disabledDate={this.disabledDates}
+            value={moment(new Date(this.state.date)) || moment(new Date())}
+            onChange={(_, date) => this.dateChange(date, 'date')} />
         </Item>
         <Item>
           <TextArea name="remark" rows={4} value={this.state.remark || ''} onChange={this.handleChange} />

@@ -1,8 +1,6 @@
 import React, {PureComponent} from 'react'
-import Form from "antd/es/form/Form"
 import Card from "antd/es/card/index"
 import {Link} from "react-router-dom"
-const {Item} = Form
 
 export default class StudentCard extends PureComponent {
 

@@ -20,14 +20,31 @@ export default class GroupForm extends PureComponent {
     e.target.value = newValue
 
     this.setState({
-      [name]: parseInt(newValue)
+      [name]: Number(newValue)
     })
   }
 
-  dateChange = (date, type) => {
+  dateChange = (date, dateStr, type, field) => {
     this.setState({
-      [type]: new Date(date).toISOString()
+      [type]: new Date(dateStr).toISOString(),
+      [field]: date
     })
+  }
+
+  disabledStartDate = (startValue) => {
+    const endValue = this.state.end
+    if (!startValue || !endValue) {
+      return false
+    }
+    return startValue.valueOf() > endValue.valueOf()
+  }
+
+  disabledEndDate = (endValue) => {
+    const startValue = this.state.start
+    if (!endValue || !startValue) {
+      return false
+    }
+    return endValue.valueOf() <= startValue.valueOf()
   }
 
   render() {
@@ -37,10 +54,18 @@ export default class GroupForm extends PureComponent {
           <Input name="id" placeholder="Class number" onChange={this.handleChange} />
         </Item>
         <Item>
-          <DatePicker placeholder="Start date" onChange={(_, date) => this.dateChange(date, 'startDate')} />
+          <DatePicker
+            disabledDate={this.disabledStartDate}
+            placeholder="Start date"
+            value={this.state.start}
+            onChange={(date, dateStr) => this.dateChange(date, dateStr, 'startDate', 'start')} />
         </Item>
         <Item>
-          <DatePicker placeholder="End date" onChange={(_, date) => this.dateChange(date, 'endDate')} />
+          <DatePicker
+            disabledDate={this.disabledEndDate}
+            placeholder="End date"
+            value={this.state.end}
+            onChange={(date, dateStr) => this.dateChange(date, dateStr, 'endDate', 'end')} />
         </Item>
         <Item>
           <Button
