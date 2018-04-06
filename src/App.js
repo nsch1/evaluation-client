@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import LoginPage from "./containers/LoginPage"
 import GroupIndex from "./containers/GroupIndexPage"
-import StudentCard from "./components/StudentCard"
 import GroupOverview from "./containers/GroupOverview"
 import {logout} from "./actions/users"
 import {connect} from "react-redux"

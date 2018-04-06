@@ -34,7 +34,7 @@ class GroupOverview extends PureComponent {
     const {students} = this.props
 
     return students.map(s => (
-      <Col style={{margin: 15}}>
+      <Col key={s.id} style={{margin: 15}}>
         <StudentCard
           student={s}
           hoverable={false}
@@ -96,6 +96,7 @@ class GroupOverview extends PureComponent {
   }
 
   handleQuestionClick = (students) => {
+    if(!students[0]) return
     this.setState({
       studentId: getRandomStudentId(students),
       redirect: true
